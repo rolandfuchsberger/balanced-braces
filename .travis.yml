@@ -6,13 +6,24 @@ sudo: required
 branches:
   only:
   - master
-  - fix_travis
-script:
-- ng lint
-- ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox
-- webdriver-manager update --standalone false --gecko false --versions.chrome 2.35
-- ng e2e --protractor-config ./e2e/protractor.conf.headless.js --webdriver-update=false
-- ng build --prod --base-href https://rolandfuchsberger.github.io/balanced-braces/
-artifacts:
-  paths:
-    - coverage/
+  - deploy_travis
+
+testing:
+  stage: test
+  script:
+  - ng lint
+  - ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox
+  - echo 'installing webdriver that works with chrome version 62.0 - which is installed on Travis node_js 9 image'
+  - webdriver-manager update --standalone false --gecko false --versions.chrome 2.35
+  - ng e2e --protractor-config ./e2e/protractor.conf.headless.js --webdriver-update=false
+
+build:
+  stage: build
+  script:
+    - ng build --prod --base-href https://rolandfuchsberger.github.io/balanced-braces/
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/balanced-braces
