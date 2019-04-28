@@ -1,5 +1,6 @@
 import { AppPage } from './app.po';
 import { browser, logging, ElementFinder } from 'protractor';
+import { fakeAsync, tick } from '@angular/core/testing';
 
 
 describe('workspace-project App', () => {
@@ -22,15 +23,35 @@ describe('workspace-project App', () => {
     expect(page.getTitleText()).toEqual('Welcome to Balanced Braces!');
   });
 
-  it('should add ng-valid / ng-invalid class on all input fields given a specific expression',  () => {
+  it('should add ng-valid / ng-invalid class on \'directive\' input fields given a specific expression',  () => {
 
-    const inputElements = [
-      { element: page.getInputDirective(), name: 'directive'},
-      { element: page.getInputInterpolation(), name: 'interpolation'},
-      { element: page.getInputNgModel(), name: 'ngModel'},
-      { element: page.getInputReactiveForm(), name: 'reactive form'}
-    ];
+    // split up in different tests to avoid timeout / avoid setting timeout limit too high
+    testElement(page.getInputDirective(), 'directive' );
 
+  });
+
+  it('should add ng-valid / ng-invalid class on \'interpolation\' input fields given a specific expression', () => {
+
+    // split up in different tests to avoid timeout / avoid setting timeout limit too high
+    testElement(page.getInputInterpolation(), 'interpolation' );
+
+  });
+
+  it('should add ng-valid / ng-invalid class on \'ngModel\' input fields given a specific expression', () => {
+
+    // split up in different tests to avoid timeout / avoid setting timeout limit too high
+    testElement(page.getInputNgModel(), 'ngModel' );
+
+  });
+
+  it('should add ng-valid / ng-invalid class on \'reactive form\' input fields given a specific expression',  () => {
+
+    // split up in different tests to avoid timeout / avoid setting timeout limit too high
+    testElement(page.getInputReactiveForm(), 'reactive form' );
+
+  });
+
+  function testElement(inputElement: ElementFinder, name: string){
     const tests = [
       {expr: 'asdf(asdf)', want: true},
       {expr: '({}[])', want: true},
@@ -47,12 +68,11 @@ describe('workspace-project App', () => {
     ];
 
 
-    shuffle(inputElements).forEach( e => shuffle(tests).forEach( t => {
-      expect(testInput(e.element, t.expr, t.want))
-      .toBeTruthy(`Error on element ${e.name} with input: '${t.expr}', expecting: ${t.want}`);
-      }));
-
-  });
+    shuffle(tests).forEach( t => {
+      expect(testInput(inputElement, t.expr, t.want))
+      .toBeTruthy(`Error on element ${name} with input: '${t.expr}', expecting: ${t.want}`);
+      });
+  }
 
   /*
    * test a specific inputString on a specific inputElement excpecting valid (valid === true) or invalid (valid == false)
@@ -61,6 +81,9 @@ describe('workspace-project App', () => {
 
     inputElement.clear();
     inputElement.sendKeys(inputString);
+
+    // move clock forward to ignore server response delay of balanced-braces-interceptor service
+    //tick(100000);
 
     // protractor sort of waits until all other async jscript operations are completed
     // key word: protractor control flow

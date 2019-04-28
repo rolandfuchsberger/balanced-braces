@@ -1,0 +1,37 @@
+<div>
+  <label>
+    Validator + Reactive Form: <br/>
+    <!-- don't remove class - required for unit testing (balanced-braces.component.spec.ts) and e2e testing (app.po.ts) -->
+    <input class="form-control reactiveForm" type="text" [formControl]="expressionValidation" >
+  </label>
+</div>
+
+<div>
+  <label>
+    Validator Directive + ngModel: <br/>
+    <!-- don't remove class - required for unit testing (balanced-braces.component.spec.ts) and e2e testing (app.po.ts) -->
+    <input class="form-control ngModel" type="text" appBalancedBracesVal [(ngModel)]="expressionValue" >
+  </label>
+</div>
+
+<div>
+  <label>
+    Directive: <br/>
+    <!-- don't remove class - required for unit testing (balanced-braces.component.spec.ts) and e2e testing (app.po.ts) -->
+    <input class="form-control directive" type="text" appBalancedBraces >
+  </label>
+</div>
+
+<div>
+  <label>
+    Interpolation + Reactive Form: <br/>
+    <!-- don't remove class - required for unit testing (balanced-braces.component.spec.ts) and e2e testing (app.po.ts) -->
+    <input class="form-control interpolation" [class.ng-invalid] = "!(isBalanced$ | async)" [class.ng-valid] = "isBalanced$ | async" type="text" [formControl]="expression">
+  </label>
+</div>
+
+<br />
+
+<p>HTTP Backend Interceptor is {{useMockBackend ? 'active': 'inactive'}}.</p>
+
+Endpoint: {{ env.balancedBracesURL }}

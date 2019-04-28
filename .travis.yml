@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "9"
+dist: trusty
+sudo: required
+branches:
+  only:
+  - master
+before_script:
+  - npm ic
+script:
+- ng lint
+- ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox
+- ng e2e --protractor-config ./e2e/protractor.conf.headless.js
+- ng build --prod --base-href https://t-palmer.github.io/travis-demo/

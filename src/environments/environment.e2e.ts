@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  useMockBackend : false,
-  mockBackendResponseDelay : 2000,
+  useMockBackend : true,
+  mockBackendResponseDelay : 0,
 };
 
 /*
