@@ -1,35 +1,43 @@
-import { TestBed, async } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { Component } from '@angular/core';
+
+
+@Component({
+  selector: 'app-balanced-braces',
+  template: `<div class='app-balanced-braces-rendered' > </div> `
+})
+class AppBalancedBracesStubComponent { }
+
+let fixture: ComponentFixture<AppComponent> ;
+let app ;
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
       declarations: [
-        AppComponent
+        AppComponent,
+        AppBalancedBracesStubComponent
       ],
     }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.debugElement.componentInstance;
+    fixture.detectChanges();
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'balanced-braces'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('balanced-braces');
+  it('should render title in a h1 tag', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h1').textContent).toContain(app.title);
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to balanced-braces!');
+  it('should render app-balanced-braces', () => {
+    expect(fixture.debugElement.query(By.css('.app-balanced-braces-rendered')))
+    .toBeTruthy('should find app-balanced-braces-rendered element');
   });
 });
