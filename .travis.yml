@@ -26,7 +26,8 @@ jobs:
       - echo 'test-build'
       - ng build --prod
     - stage: deploy
-      script: - ng build --prod --base-href https://rolandfuchsberger.github.io/balanced-braces/
+      script:
+      - ng build --prod --base-href https://rolandfuchsberger.github.io/balanced-braces/
       deploy:
         provider: pages
         skip_cleanup: true
