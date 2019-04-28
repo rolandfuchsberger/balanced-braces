@@ -1,7 +1,5 @@
 import { AppPage } from './app.po';
 import { browser, logging, ElementFinder } from 'protractor';
-import { fakeAsync, tick } from '@angular/core/testing';
-
 
 describe('workspace-project App', () => {
   let page: AppPage;
@@ -51,7 +49,7 @@ describe('workspace-project App', () => {
 
   });
 
-  function testElement(inputElement: ElementFinder, name: string){
+  function testElement(inputElement: ElementFinder, name: string) {
     const tests = [
       {expr: 'asdf(asdf)', want: true},
       {expr: '({}[])', want: true},
@@ -81,9 +79,6 @@ describe('workspace-project App', () => {
 
     inputElement.clear();
     inputElement.sendKeys(inputString);
-
-    // move clock forward to ignore server response delay of balanced-braces-interceptor service
-    //tick(100000);
 
     // protractor sort of waits until all other async jscript operations are completed
     // key word: protractor control flow

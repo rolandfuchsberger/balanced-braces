@@ -6,8 +6,13 @@ sudo: required
 branches:
   only:
   - master
+  - fix_travis
 script:
 - ng lint
 - ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox
-- ng e2e --protractor-config ./e2e/protractor.conf.headless.js
-- ng build --prod --base-href https://t-palmer.github.io/travis-demo/
+- webdriver-manager update --standalone false --gecko false --versions.chrome 2.35
+- ng e2e --protractor-config ./e2e/protractor.conf.headless.js --webdriver-update=false
+- ng build --prod --base-href https://rolandfuchsberger.github.io/balanced-braces/
+artifacts:
+  paths:
+    - coverage/
