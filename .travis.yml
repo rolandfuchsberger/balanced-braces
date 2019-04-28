@@ -8,8 +8,11 @@ branches:
   - master
   - fix_travis
 script:
+- ng lint
+- ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox --code-coverage
 - webdriver-manager update --standalone false --gecko false --versions.chrome 2.35
 - ng e2e --protractor-config ./e2e/protractor.conf.headless.js --webdriver-update=false
-- ng lint
-- ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox
 - ng build --prod --base-href https://rolandfuchsberger.github.io/balanced-braces/
+artifacts:
+  paths:
+    - coverage/
