@@ -6,6 +6,9 @@ sudo: required
 branches:
   only:
   - master
+  - fix_travis
+before_script:
+  - npm install -g @angular/cli
 script:
 - ng lint
 - ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox
