@@ -10,6 +10,5 @@ branches:
 script:
 - ng lint
 - ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox
-- webdriver-manager update --standalone false --gecko false --versions.chrome 2.44
 - ng e2e --protractor-config ./e2e/protractor.conf.headless.js --webdriver-update=false
 - ng build --prod --base-href https://rolandfuchsberger.github.io/balanced-braces/
