@@ -6,8 +6,6 @@ sudo: required
 branches:
   only:
   - master
-before_script:
-  - npm ci
 script:
 - ng lint
 - ng test --watch=false --progress=false --browsers ChromeHeadlessNoSandbox
